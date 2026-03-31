@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cherie Duong — Gallery</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red-dark:     #1a3a2a;
+      --red-mid:      #873731;
+      --green-light:  #cf898c;
+      --green-pale:   #c8ddd0;
+      --cream:        #f5f0e8;
+      --cream-dark:   #e8e0d0;
+      --cream-darker: #d4c9b5;
+      --gold:         #e6bc40;
+      --gold-light:   #873731;
+      --text-dark:    #1a1a14;
+      --text-mid:     #3d3d30;
+      --text-light:   #6b6b55;
+      --white:        #fffdf8;
+      --eyebrow:      #e72525;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      background: var(--red-dark);
+      z-index: 100;
+      padding: 1.1rem 0;
+    }
+
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-name {
+      font-size: 16px;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+
+    .nav-links a {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-pale);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a.active { color: var(--gold); }
+
+    /* PAGE HEADER */
+    .page-header {
+      background: var(--red-dark);
+      padding: 4rem 2.5rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      right: -80px; top: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      border: 40px solid rgba(200,221,208,0.08);
+    }
+
+    .page-header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-pale);
+      text-decoration: none;
+      margin-bottom: 1.75rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--gold-light); }
+
+    .page-title {
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: normal;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+
+    .page-title span { color: var(--gold); }
+
+    .page-subtitle {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      color: var(--green-pale);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-top: 1rem;
+    }
+
+    /* FILTER TABS */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--cream-darker);
+      padding: 0 2.5rem;
+      position: sticky;
+      top: 54px;
+      z-index: 90;
+    }
+
+    .filter-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+    }
+
+    .filter-btn {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      background: none;
+      border: none;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .filter-btn:hover { color: var(--text-dark); }
+    .filter-btn.active { color: var(--red-mid); border-bottom-color: var(--gold); }
+
+    /* MAIN CONTENT */
+    .main { max-width: 960px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
+
+    /* SECTION HEADERS */
+    .gallery-section { margin-bottom: 4rem; }
+
+    .gallery-section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .gallery-section-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      white-space: nowrap;
+    }
+
+    .gallery-section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--cream-darker);
+    }
+
+    .gallery-section-count {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    /* GRID LAYOUTS */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    /* GALLERY CARDS */
+    .gallery-card {
+      background: var(--white);
+      border: 1px solid var(--cream-darker);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+    .gallery-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26,58,42,0.10);
+    }
+    .lightbox-arrow {
+      position: absolute;
+      top: 60px;
+      height: calc(100% - 60px);
+      width: 80px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 42px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .lightbox-arrow:hover {
+      background: rgba(255,255,255,0.18);
+    }
+
+    .lightbox-arrow.left { left: 0; }
+    .lightbox-arrow.right { right: 0; }
+    /* IMAGE PLACEHOLDER — replace with <img> tag */
+    .img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--cream-dark);
+      border-bottom: 1px solid var(--cream-darker);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-placeholder.tall { aspect-ratio: 3/4; }
+    .img-placeholder.wide { aspect-ratio: 16/9; }
+
+    .img-placeholder.g1 { background: linear-gradient(135deg, #c8ddd0 0%, #a8c4b4 100%); }
+    .img-placeholder.g2 { background: linear-gradient(135deg, #ddd0c8 0%, #c4b4a8 100%); }
+    .img-placeholder.g3 { background: linear-gradient(135deg, #d0c8dd 0%, #b4a8c4 100%); }
+    .img-placeholder.g4 { background: linear-gradient(135deg, #ddddc8 0%, #c4c4a8 100%); }
+    .img-placeholder.g5 { background: linear-gradient(135deg, #c8d5dd 0%, #a8b8c4 100%); }
+    .img-placeholder.g6 { background: linear-gradient(135deg, #ddc8c8 0%, #c4a8a8 100%); }
+
+    .placeholder-icon {
+      width: 40px; height: 40px;
+      opacity: 0.3;
+    }
+
+    .placeholder-text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      opacity: 0.5;
+    }
+
+    .placeholder-hint {
+      position: absolute;
+      bottom: 10px; right: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 10px;
+      color: var(--text-mid);
+      opacity: 0.4;
+      font-style: italic;
+
+    }
+
+    /* HOW TO REPLACE: 
+       Replace the entire <div class="img-placeholder ..."> block with:
+       <img src="your-image-filename.jpg" style="width:100%; aspect-ratio:4/3; object-fit:cover; display:block;">
+    */
+
+    .card-info { padding: 1.1rem 1.25rem 1.25rem; }
+
+    .card-cat {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 5px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: normal;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* FEATURED CARD (spans 2 cols) */
+    .gallery-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .gallery-card.featured .img-placeholder {
+      aspect-ratio: unset;
+      min-height: 260px;
+      border-bottom: none;
+      border-right: 1px solid var(--cream-darker);
+    }
+
+    .gallery-card.featured .card-info {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .gallery-card.featured .card-title { font-size: 20px; margin-bottom: 10px; }
+    .gallery-card.featured .card-desc { font-size: 13px; margin-bottom: 1rem; }
+
+    .card-tag {
+      display: inline-block;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 3px;
+      background: var(--cream);
+      color: var(--red-mid);
+      border: 1px solid var(--cream-darker);
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* FOOTER */
+    footer {
+      background: var(--red-dark);
+      padding: 1.5rem 2.5rem;
+      text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 12px;
+      color: rgba(200,221,208,0.4);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 640px) {
+      .gallery-card.featured { grid-column: span 1; display: block; }
+      .gallery-card.featured .img-placeholder { border-right: none; border-bottom: 1px solid var(--cream-darker); min-height: 200px; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-name" href="cherie_portfolio.html">Cherie Duong</a>
+      <ul class="nav-links">
+        <li><a href="cherie_portfolio.html#skills">Skills</a></li>
+        <li><a href="cherie_portfolio.html#work">Work</a></li>
+        <li><a href="cherie_portfolio.html#experience">Experience</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="cherie_portfolio.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <a href="cherie_portfolio.html" class="back-link">&larr; &nbsp;Back to portfolio</a>
+      <div class="page-title">Work <span>Gallery.</span></div>
+      <p class="page-subtitle">A collection of graphic design, photo editing, and layout work from my time at Helius Originals and beyond.</p>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-inner">
+      <button class="filter-btn active" onclick="filterGallery('all', this)">All</button>
+      <button class="filter-btn" onclick="filterGallery('social', this)">Social Media</button>
+      <button class="filter-btn" onclick="filterGallery('layout', this)">Videos & Posters</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- SOCIAL MEDIA GRAPHICS -->
+    <div class="gallery-section" data-category="social">
+      <div class="gallery-section-header">
+        <div class="gallery-section-label">Social Media Graphics</div>
+        <div class="gallery-section-line"></div>
+        <div class="gallery-section-count">Helius Originals · 2023</div>
+      </div>
+      <div class="grid-3">
+        <div class="gallery-card reveal featured"
+            data-group="social"
+            data-src="images/pin9.png"
+            data-type="image"
+            data-title="Pinterest Campaign Series"
+            data-desc="A cohesive weekly content series designed for Pinterest."
+            onclick="openLightbox('social', 0)"
+            style="cursor:pointer;">
+          <img src="images/pin9.png" style="width:100%; object-fit:cover; display:block;">
+          <div class="card-info">
+            <div class="card-cat">Social Media · Featured</div>
+            <div class="card-title">Pinterest Campaign Series</div>
+            <div class="card-desc">A cohesive weekly content series designed for Pinterest. Each graphic maintains consistent brand colours, typography, and visual style to build a recognizable aesthetic for Helius Originals.</div>
+            <div style="margin-top: 1rem;">
+              <span class="card-tag">Canva Pro</span>
+              <span class="card-tag">Brand design</span>
+              <span class="card-tag">Pinterest</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card reveal"
+            data-group="social"
+            data-src="images/pin5.png"
+            data-type="image"
+            data-title="Pinterest Campaign Series"
+            data-desc="A cohesive weekly content series designed for Pinterest."
+            onclick="openLightbox('social', 1)"
+            style="cursor:pointer;">
+          <img src="images/pin5.png" style="width:100%; height: 220px; object-fit:cover; display:block;">
+          <div class="card-info">
+            <div class="card-cat">Social Media</div>
+            <div class="card-title">Pinterest Campaign Series</div>
+            <div class="card-desc">Weekly visual content maintaining consistent brand standards and audience appeal.</div>
+            <div style="margin-top: 1rem;">
+              <span class="card-tag">Canva Pro</span>
+              <span class="card-tag">Brand design</span>
+              <span class="card-tag">Pinterest</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-card reveal"
+            data-group="social"
+            data-src="images/pin 6.png"
+            data-type="image"
+            data-title="Pinterest Campaign Series"
+            data-desc="A cohesive weekly content series designed for Pinterest."
+            onclick="openLightbox('social', 2)"
+            style="cursor:pointer;">
+          <img src="images/pin 6.png" style="width:100%; height: 220px; object-fit:cover; display:block;">
+          <div class="card-info">
+            <div class="card-cat">Social Media</div>
+            <div class="card-title">Pinterest Campaign Series</div>
+            <div class="card-desc">Weekly visual content maintaining consistent brand standards and audience appeal.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card reveal"
+            data-group="social"
+            data-src="images/pin15.png"
+            data-type="image"
+            data-title="Pinterest Campaign Series"
+            data-desc="A cohesive weekly content series designed for Pinterest."
+            onclick="openLightbox('social', 3)"
+            style="cursor:pointer;">
+          <img src="images/pin15.png" style="width:100%; height: 220px; object-fit:cover; display:block;">
+          <div class="card-info">
+            <div class="card-cat">Social Media</div>
+            <div class="card-title">Pinterest Campaign Series</div>
+            <div class="card-desc">Weekly visual content maintaining consistent brand standards and audience appeal.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- VIDEOS & POSTERS -->
+    <div class="gallery-section" data-category="layout">
+      <div class="gallery-section-header">
+        <div class="gallery-section-label">Videos &amp; Posters</div>
+        <div class="gallery-section-line"></div>
+        <div class="gallery-section-count">Helius Originals · 2023</div>
+      </div>
+      <div class="grid-2">
+
+        <div class="gallery-card reveal"
+          data-group="layout"
+          data-src="videos/clip%2012.mp4"
+          data-type="video"
+          data-title="Promotional Video"
+          data-desc="Promotional video designed for capturing audience attention."
+          onclick="openLightbox('layout', 0)"
+          style="cursor:pointer;">
+          <video src="videos/clip%2012.mp4" style="width:100%; height:220px; object-fit:cover; display:block;" muted></video>
+          <div class="card-info">
+            <div class="card-cat">Video Production · Canva Pro</div>
+            <div class="card-title">Brand Promotional Video</div>
+            <div class="card-desc">Created a polished promotional ad for Helius Originals using Canva Pro, integrating motion, brand typography, and visual hierarchy to produce engaging content for social media audiences.</div>
+          </div>
+        </div>
+
+        <div class="gallery-card reveal"
+          data-group="layout"
+          data-src="videos/clip%206.mp4"
+          data-type="video"
+          data-title="Promotional Video"
+          data-desc="Promotional video designed for capturing audience attention."
+          onclick="openLightbox('layout', 1)"
+          style="cursor:pointer;">
+          <video src="videos/clip%206.mp4" style="width:100%; height:220px; object-fit:cover; display:block;" muted></video>
+          <div class="card-info">
+            <div class="card-cat">Video Production · Canva Pro</div>
+            <div class="card-title">Brand Promotional Video</div>
+            <div class="card-desc">Created a polished promotional ad for Helius Originals using Canva Pro, integrating motion, brand typography, and visual hierarchy to produce engaging content for social media audiences.</div>
+          </div>
+        </div> 
+
+        <div class="gallery-card reveal"
+          data-group="layout"
+          data-src="videos/clip%2017.mp4"
+          data-type="video"
+          data-title="Promotional Video"
+          data-desc="Promotional video designed for capturing audience attention."
+          onclick="openLightbox('layout', 2)"
+          style="cursor:pointer;">
+          <video src="videos/clip%2017.mp4" style="width:100%; height:220px; object-fit:cover; display:block;" muted></video>
+          <div class="card-info">
+            <div class="card-cat">Video Production · Canva Pro</div>
+            <div class="card-title">Brand Promotional Video</div>
+            <div class="card-desc">Created a polished promotional ad for Helius Originals using Canva Pro, integrating motion, brand typography, and visual hierarchy to produce engaging content for social media audiences.</div>
+          </div>
+        </div> 
+
+        <div class="gallery-card reveal"
+          data-group="layout"
+          data-src="videos/clip%2028.mp4"
+          data-type="video"
+          data-title="Promotional Video"
+          data-desc="Promotional video designed for capturing audience attention."
+          onclick="openLightbox('layout', 3)"
+          style="cursor:pointer;">
+          <video src="videos/clip%2028.mp4" style="width:100%; height:220px; object-fit:cover; display:block;" muted></video>
+          <div class="card-info">
+            <div class="card-cat">Video Production · Canva Pro</div>
+            <div class="card-title">Brand Promotional Video</div>
+            <div class="card-desc">Created a polished promotional ad for Helius Originals using Canva Pro, integrating motion, brand typography, and visual hierarchy to produce engaging content for social media audiences.</div>
+          </div>
+        </div> 
+
+      </div>
+    </div>
+  </div>
+
+  <footer>Cherie Duong &nbsp;·&nbsp; 2026</footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const siblings = [...entry.target.parentElement.children];
+          const idx = siblings.indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('visible'), idx * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function filterGallery(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.gallery-section').forEach(section => {
+        if (category === 'all' || section.dataset.category === category) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    }
+  </script>
+  <div id="lightbox" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.92); z-index:9999; align-items:center; justify-content:center; padding:4rem 100px;">
+  <button onclick="closeLightbox()" style="position:absolute; top:1.5rem; right:2rem; background:none; border:none; color:white; font-size:28px; cursor:pointer; line-height:1;">&times;</button>
+  <button class="lightbox-arrow left" onclick="changeSlide(-1)">&#8249;</button>
+  <button class="lightbox-arrow right" onclick="changeSlide(1)">&#8250;</button>
+  <div style="max-width:700px; width:100%; text-align:center; margin:0 auto;">
+    <div id="lightbox-media" style="margin-bottom:1rem;"></div>
+    <div id="lightbox-title" style="color:white; font-family:Georgia,serif; font-size:20px; margin-bottom:6px;"></div>
+    <div id="lightbox-desc" style="color:rgba(255,255,255,0.6); font-family:-apple-system,sans-serif; font-size:13px; margin-bottom:1.25rem;"></div>
+    <div id="lightbox-thumbs" style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;"></div>
+  </div>
+</div>
+  <script>
+    let currentGroup = [];
+    let currentIndex = 0;
+
+    function openLightbox(groupId, index) {
+      const cards = document.querySelectorAll(`[data-group="${groupId}"]`);
+      currentGroup = Array.from(cards).map(card => ({
+        src:   card.dataset.src,
+        type:  card.dataset.type || 'image',
+        title: card.dataset.title || '',
+        desc:  card.dataset.desc || '',
+      }));
+      currentIndex = index;
+      showSlide(currentIndex);
+      const lb = document.getElementById('lightbox');
+      lb.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+      document.body.style.overflow = '';
+      document.getElementById('lightbox-media').innerHTML = '';
+    }
+
+    function showSlide(i) {
+      currentIndex = (i + currentGroup.length) % currentGroup.length;
+      const item = currentGroup[currentIndex];
+      const media = document.getElementById('lightbox-media');
+
+      if (item.type === 'video') {
+        media.innerHTML = `<video src="${item.src}" autoplay style="max-width:100%; max-height:65vh; border-radius:6px;"></video>`;
+      } else {
+        media.innerHTML = `<img src="${item.src}" style="max-width:100%; max-height:65vh; border-radius:6px; object-fit:contain;">`;
+      }
+
+      document.getElementById('lightbox-title').textContent = item.title;
+      document.getElementById('lightbox-desc').textContent = item.desc;
+
+      const thumbs = document.getElementById('lightbox-thumbs');
+      thumbs.innerHTML = currentGroup.map((t, idx) => {
+        const border = idx === currentIndex ? '2px solid #c9a84c' : '2px solid transparent';
+        if (t.type === 'video') {
+          return `<div onclick="showSlide(${idx})" style="width:60px;height:60px;border-radius:4px;border:${border};background:#333;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>`;
+        }
+        return `<img src="${t.src}" onclick="showSlide(${idx})" style="width:60px;height:60px;object-fit:cover;border-radius:4px;border:${border};cursor:pointer;">`;
+      }).join('');
+    }
+
+    function changeSlide(dir) { showSlide(currentIndex + dir); }
+
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (document.getElementById('lightbox').style.display === 'flex') {
+        if (e.key === 'ArrowRight') changeSlide(1);
+        if (e.key === 'ArrowLeft') changeSlide(-1);
+        if (e.key === 'Escape') closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
